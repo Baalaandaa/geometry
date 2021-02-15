@@ -6,7 +6,7 @@
 
 ```c++
     const double EPS = 1e-6; //Calculations precision
-    const int OUTPUT_PRECISION = 10; //Output precision
+    const int OUTPUT_PRECISION = 10;
 ```
 
 ## structes
@@ -20,38 +20,42 @@ struct Vec2{
     Vec2(): x(0), y(0);
     Vec2(T val): x(val), y(val);
     Vec2(T x_, T y_): x(x_), y(y_);
-    Vec2(const Vec2 &oth): x(oth.x), y(oth.y);
+    Vec2(const Vec2<T> &oth): x(oth.x), y(oth.y);
     
     //Input, output in format "2.0 5.0"
-    friend istream& operator>> (istream& in, Vec2 &a);
-    friend ostream& operator<< (ostream& in, const Vec2 &a);
+    friend istream& operator>> (istream& in, Vec2<T> &a);
+    friend ostream& operator<< (ostream& out, const Vec2<T> &a);
  
     //Add, subtract
-    Vec2 operator+ (const Vec2& oth) const;
-    Vec2 operator- (const Vec2& oth) const;
+    Vec2<T> operator+ (const Vec2<T>& oth) const;
+    Vec2<T> operator- (const Vec2<T>& oth) const;
+    void operator+= (const Vec2<T>& oth);
+    void operator-= (const Vec2<T>& oth);
     
     //Multiply and divide on scalar
-    Vec2 operator* (const T k) const;
-    Vec2 operator/ (const T k) const;
+    Vec2<T> operator* (const T k) const;
+    Vec2<T> operator/ (const T k) const;
+    void operator*= (const T k);
+    void operator/= (const T k);
 
     //Unary operator- (-a == a * (-1))
-    Vec2 operator- () const;
+    Vec2<T> operator- () const;
 
     //Scalar multiplication
-    Vec2 operator* (const Vec2& oth) const;
+    T operator* (const Vec2<T>& oth) const;
     
     //Pseudo-vector multiplication
-    Vec2 operator% (const Vec2 &oth) const;
+    T operator% (const Vec2<T> &oth) const;
     
     //Signed angle between vectors
-    double operator^ (const Vec2 &oth) const;
+    double operator^ (const Vec2<T> &oth) const;
 
-    Vec2 rotate(const double ang) const;
+    Vec2<T> rotate(const double ang) const;
     
     T square_length() const; // Returns squared vector length
     double length() const; // Returns vector length
-    Vec2 normalize() const; //Returns normalized vector 
-    Vec2 norm() const; //Return perpendicular vector
+    Vec2<T> normalize() const; //Returns normalized vector 
+    Vec2<T> norm() const; //Return perpendicular vector
 
 };
 using Point = Vec2;
@@ -71,7 +75,7 @@ struct Line{
 
     //Input, output in format "2.0 5.0"
     friend istream& operator>> (istream& in, Line &a);
-    friend ostream& operator<< (ostream& in, const Line &a);
+    friend ostream& operator<< (ostream& out, const Line &a);
 
     Vec2 normal() const;//Normal vector
     Vec2 directive() const;//Directive vector
