@@ -29,14 +29,14 @@ struct Vec2{
     //Add, subtract
     Vec2<T> operator+ (const Vec2<T>& oth) const;
     Vec2<T> operator- (const Vec2<T>& oth) const;
-    void operator+= (const Vec2<T>& oth);
-    void operator-= (const Vec2<T>& oth);
+    Vec2<T>& operator+= (const Vec2<T>& oth);
+    Vec2<T>& operator-= (const Vec2<T>& oth);
     
     //Multiply and divide on scalar
     Vec2<T> operator* (const T k) const;
     Vec2<T> operator/ (const T k) const;
-    void operator*= (const T k);
-    void operator/= (const T k);
+    Vec2<T>& operator*= (const T k);
+    Vec2<T>& operator/= (const T k);
 
     //Unary operator- (-a == a * (-1))
     Vec2<T> operator- () const;

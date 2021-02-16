@@ -38,14 +38,16 @@ struct Vec2{
         return Vec2<T>(x - oth.x, y - oth.y);
     }
 
-    void operator+= (const Vec2<T>& oth){
+    Vec2<T>& operator+= (const Vec2<T>& oth){
         x += oth.x;
         y += oth.y;
+        return *this;
     }
 
-    void operator-= (const Vec2<T>& oth){
+    Vec2<T>& operator-= (const Vec2<T>& oth){
         x -= oth.x;
         y -= oth.y;
+        return *this;
     }
 
     //Multiply and divide on scalar
@@ -57,14 +59,22 @@ struct Vec2{
         return Vec2<T>(x / k, y / k);
     }
 
-    void operator*= (const T k){
+    //Thx to Alexey @minus_vseros Pozdnyakov
+    //Thx to Grigoriy @princebelkovetz Belkovetz
+    //Thx to all discord cummunity
+    //Fuck Artem Akimov!
+    //With love, Kirill @baalaandaa Balandin
+
+    Vec2<T>& operator*= (const T k){
         x *= k;
         y *= k;
+        return *this;
     }
 
-    void operator/= (const T k){
+    Vec2<T>& operator/= (const T k){
         x /= k;
         y /= k;
+        return *this;
     }
 
     //Unary operator- (-a == a * (-1))
@@ -93,22 +103,22 @@ struct Vec2{
     }
 
     // Returns squared vector length
-    T square_length() const{
+    [[nodiscard]] T square_length() const{
         return x * x + y * y;
     }
 
     // Returns vector length
-    double length() const{
+    [[nodiscard]] double length() const{
         return sqrt(square_length());
     }
 
     //Returns normalized vector
-    Vec2<T> normalize() const{
+    [[nodiscard]] Vec2<T> normalize() const{
         return *this / length();
     };
 
     //Return perpendicular vector
-    Vec2<T> normal() const{
+    [[nodiscard]] Vec2<T> normal() const{
         return Vec2(y, x);
     }
 
