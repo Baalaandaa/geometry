@@ -74,17 +74,19 @@ struct Line{
     Line(const Line<T>& oth): a(oth.a), b(oth.b), c(oth.c);
 
     //Input, output in format "2.0 5.0"
-    friend istream& operator>> (istream& in, Line &a);
-    friend ostream& operator<< (ostream& out, const Line &a);
+    friend istream& operator>> (istream& in, Line<T> &a);
+    friend ostream& operator<< (ostream& out, const Line<T> &a);
 
-    Vec2 normal() const;//Normal vector
-    Vec2 directive() const;//Directive vector
+    Vec2<T> normal() const;//Normal vector
+    Vec2<T> directive() const;//Directive vector
 
-    double operator^(const Vec2& oth) const;//Angle between line and vector
-    double operator^(const Line& oth) const;//Angle between line and line
+    double operator^(const Vec2<T>& oth) const;//Angle between line and vector
+    double operator^(const Line<T>& oth) const;//Angle between line and line
     
-    Line rotate(const Point& a, const double &angle) const;//Rotate line around point a
-    Line move(const double &dist) const;//Parallel move
+    Line<T> rotate(const Point<T>& a, const double &angle) const;//Rotate line around point a(a \in line)
+    Line<T> move(const double &dist) const;//Parallel move
+
+    bool check(const Point<T>& pt) const;//Checks if line contains point
    
 };
 ```
