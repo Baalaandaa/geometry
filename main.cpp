@@ -137,14 +137,9 @@ struct Line{
 
     Line(const T& a_, const T& b_, const T& c_): a(a_), b(b_), c(c_){}
 
-    Line(const Point<T>& l_, const Point<T>& r_){
-        a = b.y - a.y;
-        b = a.x - b.x;
-        c = b % a;
-    }
+    Line(const Point<T>& l_, const Point<T>& r_): a(r_.y - l_.y), b(l_.x - r_.x), c(r_ % l_){}
 
-    Line(const Line<T>& oth): a(oth.a), b(oth.b), c(oth.c){
-    }
+    Line(const Line<T>& oth): a(oth.a), b(oth.b), c(oth.c){}
 
     //Input, output in format "2.0 5.0"
     friend istream& operator>> (istream& in, Line<T> &l){
