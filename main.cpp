@@ -122,6 +122,10 @@ struct Vec2{
         return Vec2(-y, x);
     }
 
+    Vec2<T> setLen(T len) const{
+        return *this * len / length();
+    }
+
 };
 
 template<typename T = double>
@@ -216,8 +220,57 @@ T dist(const Line<T> &a, const Line<T> &b){
     if(auto pt = intersect(a, b)){
         return 0;
     } else {
-        return abs(b.c - a.c) / a.normal();
+        return abs(b.c - a.c) / a.normal().length();
     }
+}
+
+
+template<typename T = double>
+struct Circle{
+
+    Point<T> o;
+    T r;
+
+    Circle(): o(), r(0){}
+    Circle(const T& rad): o(), r(rad){}
+    Circle(const Point<T>& pt, const T& rad): o(pt), r(rad){}
+    Circle(const Circle<T>& oth): o(oth.o), r(oth.r){}
+
+};
+
+
+template<typename T = double>
+T dist(const Point<T> &a, const Circle<T> &b){
+    return dist(a, b.o) - b.r;
+}
+
+
+template<typename T = double>
+pair<optional<Point<T>>, optional<Point<T>>> intersect(const Line<T> &ln, const Circle<T> &circle){
+    T dst = dist(circle.o, ln);
+    if(dst > circle.r) return {nullopt, nullopt};
+    Vec2<T> OH = (-ln.normal()).setLen(dst);
+    Point<T> H = circle.o + OH;
+    if(abs(dst - circle.r) < EPS) return {H, nullopt};
+    T hidist = sqrt(circle.r * circle.r - dst * dst);
+    Vec2<T> HI = (ln.directive().setLen(hidist);
+    return {H + HI, H - HI};
+}
+
+
+template<typename T = double>
+pair<optional<Point<T>>, optional<Point<T>>> intersect(const Circle<T> &cira, const Circle<T> &cirb){
+    //r1^2 - h^2 = a^2
+    //r2^2 - h^2 = b^2
+    //a + b = r1 + r2 -
+    Vec2<T> relation = cirb.o - cira.o;
+    if(abs(relation.x) < EPS && abs(relation.y) < EPS){
+        return {nullopt, nullopt};
+    }
+    relation *= -2;
+    T coeff = relation.x * relation.x + relation.y * relation.y + cira.r * cira.r - cirb.r * cirb.r;
+    Line<T> kek(relation.x, relation.y, coeff);//Trick from emaxx(just some algebra)
+    return intersect(kek, cira);
 }
 
 int main() {

@@ -56,6 +56,7 @@ struct Vec2{
     double length() const; // Returns vector length
     Vec2<T> normalize() const; //Returns normalized vector 
     Vec2<T> norm() const; //Return perpendicular vector
+    Vec2<T> setLen(T len) const; //Return vector with same direction and length `len`
 
 };
 using Point = Vec2;
@@ -101,7 +102,7 @@ struct Circle{
     
     Circle(): o(), r(0);
     Circle(const T& rad): o(), r(rad);
-    Circle(const Point<T>& pt, const T& rad): p(pt), r(rad);
+    Circle(const Point<T>& pt, const T& rad): o(pt), r(rad);
     Circle(const Circle<T>& oth): o(oth.o), r(oth.r);
 
 };
